@@ -130,26 +130,17 @@ def run_research(topic):
     research_crew.kickoff(inputs={'topic': topic})
     # Combine all results including intermediate steps
     # all_results = "\n\n=== Research Process ===\n"
-    all_results = ""
+    all_results = "===Summary\n"
 
     for task in research_crew.tasks:
         task_output = task.output
         if task_output:
-            all_results += f"==={task_output.description}\n{task_output.raw}\n"
+            all_results += f"{task_output.raw}\n"
     
         agent = task.agent
-        all_results += "===Details\n"
+        # all_results += "===Details\n"
         for result in agent.tools_results:
-            all_results += f"{result['result']}"
+            all_results += result['result']
 
-        if hasattr(agent, 'memory') and agent.memory:
-            for memory_item in agent.memory.memory_items:
-                if 'tool_output' in memory_item:
-                    all_results += f"==={memory_item.get('tool_name', 'Unknown')}\n"
-                    all_results += f"{memory_item.get('tool_output')}\n\n"
-
-
-
-    # all_results += f"\n\n=== Final Result ===\n{final_result}"
-    
+    # all_results += f"\n\n=== Final Result ===\n{final_result}" 
     return all_results

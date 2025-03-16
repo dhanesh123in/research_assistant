@@ -18,7 +18,7 @@ def fetch_arxiv_papers(query: str) -> str:
     )
     papers = []
     for result in search.results():
-        papers.append(f"{result.title} - {result.entry_id}\nAbstract: {result.summary}\n")
+        papers.append(f"=== {result.title}\nAbstract: {result.summary}\nLink: {result.entry_id}\n")
     return "\n".join(papers) if papers else "No relevant papers found."
 
 # Web search tool using Google Search API

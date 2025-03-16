@@ -1,6 +1,6 @@
 fetch_papers:
   description: "Retrieve the most relevant research papers on {topic} from Arxiv."
-  expected_output: "A list of top 5 research papers related to {topic}."
+  expected_output: "A list of top 10 research papers related to {topic}."
 
 summarize_papers:
   description: "Summarize key findings from the retrieved papers."
