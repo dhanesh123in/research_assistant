@@ -46,7 +46,8 @@ arxiv_researcher = Agent(
     llm=llm,
     allow_delegation=False,
     verbose=True,
-    system_prompt=agents_config["arxiv_researcher"]["system_prompt"]
+    system_prompt=agents_config["arxiv_researcher"]["system_prompt"],
+    cache=False
 )
 
 summarizer = Agent(
