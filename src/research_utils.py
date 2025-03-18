@@ -3,6 +3,15 @@ import ollama
 from typing import List, Dict, Optional
 import re
 from .error_utils import retry_with_backoff, ArxivError, OllamaError
+import hashlib
+import json
+from pathlib import Path
+import os
+from datetime import datetime
+
+# Cache directory
+CACHE_DIR = Path("cache")
+CACHE_DIR.mkdir(exist_ok=True)
 
 @retry_with_backoff(retries=3)
 def fetch_arxiv_papers(query: str, max_results: int = 10) -> List[Dict]:
@@ -107,4 +116,44 @@ def format_paper_details(papers: List[Dict]) -> str:
             
         return formatted_text
     except Exception as e:
-        return f"Error formatting paper details: {str(e)}" 
+        return f"Error formatting paper details: {str(e)}"
+
+def create_cache_key(topic: str, max_results: int, model: str) -> str:
+    """Create a unique cache key for the research query"""
+    data = f"{topic}-{max_results}-{model}"
+    return hashlib.md5(data.encode()).hexdigest()
+
+def get_cached_research(cache_key: str) -> Optional[Dict]:
+    """Get cached research results from file"""
+    cache_file = CACHE_DIR / f"{cache_key}.json"
+    if cache_file.exists():
+        try:
+            with open(cache_file, "r") as f:
+                return json.load(f)
+        except Exception:
+            return None
+    return None
+
+def save_to_cache(cache_key: str, results: Dict) -> None:
+    """Save research results to cache file"""
+    cache_file = CACHE_DIR / f"{cache_key}.json"
+    try:
+        with open(cache_file, "w") as f:
+            json.dump(results, f)
+    except Exception as e:
+        print(f"Failed to save to cache: {str(e)}")
+
+def cache_research_results(cache_key: str, results: dict) -> None:
+    """Cache research results"""
+    save_to_cache(cache_key, results)
+
+def cleanup_old_cache(max_age_days: int = 7) -> None:
+    """Remove cache files older than max_age_days"""
+    now = datetime.now()
+    for cache_file in CACHE_DIR.glob("*.json"):
+        file_age = datetime.fromtimestamp(os.path.getmtime(cache_file))
+        if (now - file_age).days > max_age_days:
+            try:
+                os.remove(cache_file)
+            except Exception:
+                continue 
