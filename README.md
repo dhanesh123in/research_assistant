@@ -14,4 +14,20 @@ The app features:
 - 💾 Search history and caching
 - ⚙️ Configurable paper count and AI model selection
 
+## Getting Started
+
+```
+pip install requirements.txt
+streamlit run streamlit_simple_app.py
+```
+
+## Bonus (CrewAI app)
+
+```
+streamlit run streamlit_app.py
+```
+
+Note: The CrewAI agent that does arxiv research gives strange summaries at times from ollama.
+
+Disclaimer: Co-written with Cursor
 
