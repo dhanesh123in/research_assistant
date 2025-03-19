@@ -16,10 +16,17 @@ The app features:
 
 ## Getting Started
 
+Ensure Ollama is installed and running. The code has been tested on Python 3.10.12
+
 ```
-pip install requirements.txt
+pip install requirements.txt #preferably in a virtual environment
 streamlit run streamlit_simple_app.py
 ```
 
-Disclaimer: Co-written with Cursor
+If the installation fails, following installion command should do it
+
+```
+pip install streamlit arxiv ollama markdown weasyprint
+```
+
 
