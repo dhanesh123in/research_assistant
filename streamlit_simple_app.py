@@ -5,7 +5,7 @@ import base64
 from io import BytesIO
 import markdown
 from weasyprint import HTML
-from src.error_utils import ArxivError, OllamaError, ResearchError
+from src.error_utils import ArxivError, OllamaError
 import json
 from datetime import datetime
 import os

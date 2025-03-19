@@ -1,6 +1,0 @@
-OPENAI_API_KEY: "fake-key"  # Your actual API key
-OPENAI_API_BASE: "http://localhost:11434/v1"
-OPENAI_API_MODEL: "deepseek-r1:14b"  # or whatever model you're using
-temperature: 0.7
-base_url: "http://localhost:11434"
-LITELLM_MODEL_PROVIDER: "ollama"
